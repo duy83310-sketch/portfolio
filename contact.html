@@ -1,0 +1,373 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Liên Hệ | Duy's Portfolio</title>
+  <meta name="description" content="Liên hệ Duy's Portfolio — Nguyễn Đức Duy, 2D Animator & AI Video Producer. Sẵn sàng hợp tác tạo nội dung thiếu nhi chất lượng cao."/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"/>
+  <style>
+    /* Page header */
+    .contact-header { padding-top: calc(80px + var(--spacing-xl)); padding-bottom: var(--spacing-lg); text-align: center; position: relative; overflow: hidden; }
+    .contact-header h1 { max-width: 700px; margin: var(--spacing-sm) auto var(--spacing-md); }
+    .contact-header p  { max-width: 520px; margin: 0 auto; color: var(--text-mid); }
+
+    /* Main layout */
+    .contact-main { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: var(--spacing-xl); align-items: start; }
+    @media (max-width: 900px) { .contact-main { grid-template-columns: 1fr; } .contact-sidebar { order: -1; } }
+
+    /* Form card */
+    .form-card { background: var(--surface); border-radius: var(--radius-lg); padding: var(--spacing-xl) var(--spacing-lg); border: 1.5px solid var(--outline); box-shadow: var(--shadow); }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); }
+    @media (max-width: 560px) { .form-grid-2 { grid-template-columns: 1fr; } }
+    .form-submit { width: 100%; padding: 16px; background: var(--primary); color: white; border-radius: var(--radius-full); font-family: var(--font-main); font-weight: 700; font-size: 1.05rem; cursor: pointer; border: none; transition: all var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: var(--spacing-sm); }
+    .form-submit:hover { background: var(--primary-dark); transform: scale(1.02) translateY(-2px); box-shadow: var(--shadow); }
+    .form-submit:active { transform: translateY(1px) scale(0.99); }
+
+    /* Sidebar */
+    .contact-info-card { background: linear-gradient(135deg, var(--pink-cta) 0%, #F9D6D4 100%); border-radius: var(--radius-lg); padding: var(--spacing-lg); margin-bottom: var(--spacing-md); position: relative; overflow: hidden; }
+    .contact-info-card .deco { position: absolute; width: 150px; height: 150px; background: rgba(201,80,78,0.12); border-radius: 50%; bottom: -50px; right: -40px; }
+    .contact-info-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--pink-cta-text); margin-bottom: var(--spacing-sm); position: relative; z-index: 1; }
+    .contact-detail { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(201,80,78,0.15); position: relative; z-index: 1; }
+    .contact-detail:last-child { border-bottom: none; }
+    .contact-detail-icon { width: 40px; height: 40px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: var(--shadow-sm); }
+    .contact-detail-icon .material-symbols-outlined { font-size: 1.1rem; color: var(--primary); font-variation-settings: 'FILL' 1; }
+    .contact-detail-text strong { display: block; font-size: 0.8rem; font-weight: 700; color: var(--pink-cta-text); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .contact-detail-text span { font-size: 0.92rem; color: var(--text-mid); }
+
+    /* Social card */
+    .social-card { background: var(--surface); border-radius: var(--radius-lg); padding: var(--spacing-md); border: 1.5px solid var(--outline); margin-bottom: var(--spacing-md); }
+    .social-card h4 { font-weight: 700; margin-bottom: var(--spacing-sm); }
+    .social-list { display: flex; flex-direction: column; gap: 10px; }
+    .social-row { display: flex; align-items: center; gap: 14px; padding: 10px 14px; border-radius: var(--radius); transition: all 0.2s; cursor: pointer; text-decoration: none; color: inherit; }
+    .social-row:hover { background: var(--bg-alt); transform: translateX(4px); }
+    .social-row-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .social-row-icon.yt  { background: #FF0000; }
+    .social-row-icon.tt  { background: #000000; }
+    .social-row-icon.fb  { background: #1877F2; }
+    .social-row-icon.mail{ background: var(--primary); }
+    .social-row-icon .material-symbols-outlined { color: white; font-size: 1.2rem; font-variation-settings: 'FILL' 1; }
+    .social-row-info strong { display: block; font-size: 0.92rem; font-weight: 700; }
+    .social-row-info span { font-size: 0.8rem; color: var(--text-light); }
+
+    /* Map section */
+    .map-section { background: var(--bg-alt); }
+    .map-card { background: var(--surface); border-radius: var(--radius-lg); padding: var(--spacing-lg); border: 1.5px solid var(--outline); box-shadow: var(--shadow-sm); }
+    .map-container { position: relative; height: 300px; background: linear-gradient(145deg, #E8F4F8 0%, #D4EDF7 100%); border-radius: var(--radius-md); overflow: hidden; margin: var(--spacing-md) 0 var(--spacing-sm); border: 1.5px solid var(--outline); }
+    /* Simple SVG world map paths */
+    .map-svg { width: 100%; height: 100%; opacity: 0.35; }
+    /* Pins */
+    .pin-ha-noi  { top: 43%; left: 79%; }
+    .pin-hcm     { top: 51%; left: 80%; }
+    .pin-usa     { top: 37%; left: 20%; }
+    .pin-uk      { top: 28%; left: 46%; }
+    .pin-japan   { top: 37%; left: 85%; }
+    .pin-tooltip { display: none; position: absolute; background: white; color: var(--text-dark); padding: 6px 12px; border-radius: var(--radius); font-size: 0.78rem; font-weight: 700; box-shadow: var(--shadow); white-space: nowrap; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 10; }
+    .map-pin:hover .pin-tooltip { display: block; }
+    .map-pin { position: absolute; }
+    .map-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 5px rgba(201,80,78,0.22); cursor: pointer; transition: transform 0.3s; }
+    .map-dot:hover { transform: scale(1.5); }
+    @keyframes ripple { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(2.5); opacity: 0; } }
+    .map-ripple { position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--primary); animation: ripple 2s linear infinite; pointer-events: none; }
+    .map-legend { display: flex; gap: var(--spacing-md); flex-wrap: wrap; justify-content: center; }
+    .map-legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--text-mid); }
+    .map-legend-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); }
+
+    /* Success message */
+    .success-msg { display: none; background: #D1FAE5; border: 1.5px solid #6EE7B7; color: #065F46; padding: 14px 18px; border-radius: var(--radius); font-weight: 600; text-align: center; margin-top: var(--spacing-sm); }
+    .success-msg.show { display: block; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">D</div>
+      <span data-vi="Duy's Portfolio" data-en="Duy's Portfolio">Duy's Portfolio</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a></li>
+      <li><a href="portfolio.html" data-vi="Portfolio" data-en="Portfolio">Portfolio</a></li>
+      <li><a href="about.html" data-vi="Về tác giả" data-en="About">Về tác giả</a></li>
+      <li><a href="contact.html" class="active" data-vi="Liên hệ" data-en="Contact">Liên hệ</a></li>
+    </ul>
+    <a href="#contact-form" class="nav-cta" data-vi="Gửi tin nhắn 💌" data-en="Send a Message 💌">Gửi tin nhắn 💌</a>
+    <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-mobile" id="mobile-menu">
+  <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+  <a href="portfolio.html" data-vi="Portfolio" data-en="Portfolio">Portfolio</a>
+  <a href="about.html" data-vi="Về tác giả" data-en="About">Về tác giả</a>
+  <a href="contact.html" class="active" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+</div>
+
+<main>
+
+<!-- ── Header ─────────────────────────────────────────── -->
+<section class="contact-header">
+  <div class="blob blob-coral" style="width:400px;height:400px;top:-120px;left:-100px;z-index:0;"></div>
+  <div class="blob blob-pink"  style="width:350px;height:350px;bottom:-80px;right:-80px;z-index:0;"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="badge badge-yellow fade-up">Liên hệ</span>
+    <h1 class="display-xl fade-up fade-up-1" data-vi="Ready to Create&lt;br/&gt;&lt;span style='color:var(--primary);'&gt;Some Magic? ✨&lt;/span&gt;" data-en="Ready to Create&lt;br/&gt;&lt;span style='color:var(--primary);'&gt;Some Magic? ✨&lt;/span&gt;">Ready to Create<br/><span style="color:var(--primary);">Some Magic? ✨</span></h1>
+    <p class="body-lg fade-up fade-up-2" data-vi="Dù bạn là thương hiệu, nhà xuất bản hay phụ huynh muốn tạo nội dung đặc biệt cho bé — hãy để lại tin nhắn, mình sẽ phản hồi trong vòng 24h!" data-en="Whether you're a brand, publisher or parent wanting to create special content for your child — drop a message, I'll respond within 24 hours!">Dù bạn là thương hiệu, nhà xuất bản hay phụ huynh muốn tạo nội dung đặc biệt cho bé — hãy để lại tin nhắn, mình sẽ phản hồi trong vòng 24h!</p>
+  </div>
+</section>
+
+<!-- ── Contact Form + Sidebar ──────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="contact-main">
+
+      <!-- Form -->
+      <div class="reveal" id="contact-form">
+        <div class="form-card">
+          <h2 class="headline-md" style="margin-bottom:6px;" data-vi="Gửi tin nhắn 💌" data-en="Send a Message 💌">Gửi tin nhắn 💌</h2>
+          <p class="body-md" style="color:var(--text-light);margin-bottom:var(--spacing-lg);" data-vi="Điền thông tin bên dưới, mình sẽ phản hồi sớm nhất có thể!" data-en="Fill in the details below and I'll get back to you as soon as possible!">Điền thông tin bên dưới, mình sẽ phản hồi sớm nhất có thể!</p>
+          <form id="the-form" novalidate>
+            <div class="form-grid-2" style="margin-bottom:var(--gutter);">
+              <div class="form-group">
+                <label class="form-label" for="fname" data-vi="Họ và tên *" data-en="Full name *">Họ và tên *</label>
+                <input class="form-input" type="text" id="fname" name="fname" data-ph-vi="Nguyễn Văn A" data-ph-en="John Smith" placeholder="Nguyễn Văn A" required/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email" data-vi="Email *" data-en="Email *">Email *</label>
+                <input class="form-input" type="email" id="email" name="email" data-ph-vi="hello@example.com" data-ph-en="hello@example.com" placeholder="hello@example.com" required/>
+              </div>
+            </div>
+            <div class="form-grid-2" style="margin-bottom:var(--gutter);">
+              <div class="form-group">
+                <label class="form-label" for="phone" data-vi="Số điện thoại" data-en="Phone number">Số điện thoại</label>
+                <input class="form-input" type="tel" id="phone" name="phone" data-ph-vi="0912 345 678" data-ph-en="+1 234 567 890" placeholder="0912 345 678"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="subject" data-vi="Chủ đề" data-en="Subject">Chủ đề</label>
+                <input class="form-input" type="text" id="subject" name="subject" data-ph-vi="Hợp tác sản xuất video..." data-ph-en="Video production collaboration..." placeholder="Hợp tác sản xuất video..."/>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:var(--gutter);">
+              <label class="form-label" for="message" data-vi="Nội dung tin nhắn *" data-en="Message *">Nội dung tin nhắn *</label>
+              <textarea class="form-textarea" id="message" name="message" data-ph-vi="Mô tả dự án, yêu cầu..." data-ph-en="Describe your project, requirements..." placeholder="Mô tả dự án, yêu cầu, hoặc bất kỳ ý tưởng nào bạn muốn chia sẻ..." required style="min-height:160px;"></textarea>
+            </div>
+            <!-- Checkbox -->
+            <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:var(--spacing-md);">
+              <input type="checkbox" id="agree" name="agree" style="margin-top:3px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0;" required/>
+              <label for="agree" style="font-size:0.88rem;color:var(--text-mid);cursor:pointer;" data-vi="Tôi đồng ý cho Duy's Portfolio liên hệ lại theo thông tin đã cung cấp." data-en="I agree to allow Duy's Portfolio to contact me using the information provided.">Tôi đồng ý cho Duy's Portfolio liên hệ lại theo thông tin đã cung cấp.</label>
+            </div>
+            <button type="submit" class="form-submit" id="submit-btn">
+              <span class="material-symbols-outlined" style="font-size:1.2rem;font-variation-settings:'FILL' 1;">send</span>
+              <span data-vi="Gửi tin nhắn" data-en="Send Message">Gửi tin nhắn</span>
+            </button>
+            <div class="success-msg" id="success-msg" data-vi="🎉 Cảm ơn bạn! Mình sẽ phản hồi trong vòng 24h. Hẹn gặp lại!" data-en="🎉 Thank you! I'll get back to you within 24 hours. Talk soon!">
+              🎉 Cảm ơn bạn! Mình sẽ phản hồi trong vòng 24h. Hẹn gặp lại!
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="contact-sidebar reveal" style="transition-delay:0.12s;">
+
+        <!-- Contact info -->
+        <div class="contact-info-card">
+          <div class="deco"></div>
+          <h3 data-vi="Thông tin liên hệ" data-en="Contact Information">Thông tin liên hệ</h3>
+          <div class="contact-detail">
+            <div class="contact-detail-icon"><span class="material-symbols-outlined">person</span></div>
+            <div class="contact-detail-text">
+              <strong data-vi="Họ tên" data-en="Full name">Họ tên</strong>
+              <span>Nguyễn Đức Duy</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon"><span class="material-symbols-outlined">mail</span></div>
+            <div class="contact-detail-text">
+              <strong>Email</strong>
+              <span>duy83310@gmail.com</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon"><span class="material-symbols-outlined">call</span></div>
+            <div class="contact-detail-text">
+              <strong data-vi="Điện thoại" data-en="Phone number">Điện thoại</strong>
+              <span>0988 003 813</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon"><span class="material-symbols-outlined">location_on</span></div>
+            <div class="contact-detail-text">
+              <strong data-vi="Địa chỉ" data-en="Address">Địa chỉ</strong>
+              <span>Hoàng Mai, Hà Nội, Việt Nam</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social quick links -->
+        <div class="social-card">
+          <h4 data-vi="Kết nối nhanh" data-en="Quick Links">Kết nối nhanh</h4>
+          <div class="social-list">
+            <a href="https://youtube.com/@pamnox" target="_blank" class="social-row">
+              <div class="social-row-icon yt"><span class="material-symbols-outlined">smart_display</span></div>
+              <div class="social-row-info">
+                <strong>YouTube Pamnox</strong>
+                <span data-vi="400K+ Đăng ký · 50M+ Lượt xem" data-en="400K+ Subscribers · 50M+ Views">400K+ Subscribers · 50M+ Views</span>
+              </div>
+            </a>
+            <a href="#" class="social-row">
+              <div class="social-row-icon tt"><span class="material-symbols-outlined">video_camera_back</span></div>
+              <div class="social-row-info">
+                <strong>TikTok @pamnox</strong>
+                <span data-vi="Shorts &amp; nội dung thịnh hành" data-en="Shorts &amp; trending content">Shorts &amp; trending content</span>
+              </div>
+            </a>
+            <a href="https://www.facebook.com/Duy.beu.50" target="_blank" class="social-row">
+              <div class="social-row-icon fb"><span class="material-symbols-outlined">group</span></div>
+              <div class="social-row-info">
+                <strong>Facebook — Nguyễn Đức Duy</strong>
+                <span data-vi="Kết nối cá nhân" data-en="Personal connection">Kết nối cá nhân</span>
+              </div>
+            </a>
+            <a href="mailto:duy83310@gmail.com" class="social-row">
+              <div class="social-row-icon mail"><span class="material-symbols-outlined">mail</span></div>
+              <div class="social-row-info">
+                <strong data-vi="Email trực tiếp" data-en="Direct Email">Email trực tiếp</strong>
+                <span>duy83310@gmail.com</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Response time -->
+        <div style="background:var(--surface);border-radius:var(--radius-lg);padding:var(--spacing-md);border:1.5px solid var(--outline);text-align:center;">
+          <div style="font-size:2rem;margin-bottom:6px;">⚡</div>
+          <div style="font-weight:700;margin-bottom:4px;" data-vi="Phản hồi trong 24h" data-en="Response within 24h">Phản hồi trong 24h</div>
+          <div style="font-size:0.88rem;color:var(--text-light);" data-vi="Thường xuyên online — đừng ngại nhắn tin!" data-en="Always online — don't hesitate to reach out!">Thường xuyên online — đừng ngại nhắn tin!</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Global Reach ────────────────────────────────────── -->
+<section class="map-section section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:var(--spacing-lg);" class="reveal">
+      <span class="badge badge-pink" style="margin-bottom:10px;" data-vi="Phạm vi tiếp cận" data-en="Global Reach">Phạm vi tiếp cận</span>
+      <h2 class="display-lg" style="margin-bottom:var(--spacing-sm);" data-vi="Global Reach,&lt;br/&gt;&lt;span style='color:var(--primary);'&gt;Local Heart&lt;/span&gt;" data-en="Global Reach,&lt;br/&gt;&lt;span style='color:var(--primary);'&gt;Local Heart&lt;/span&gt;">Global Reach,<br/><span style="color:var(--primary);">Local Heart</span></h2>
+      <p class="body-md" style="color:var(--text-light);max-width:480px;margin:0 auto;" data-vi="Các nội dung của mình đã chạm đến trái tim trẻ em và phụ huynh khắp nơi trên thế giới." data-en="My content has touched the hearts of children and parents all around the world.">Các nội dung của mình đã chạm đến trái tim trẻ em và phụ huynh khắp nơi trên thế giới.</p>
+    </div>
+    <div class="map-card reveal">
+      <div class="map-container" id="map-container">
+        <!-- SVG world map (simplified) -->
+        <svg class="map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#CBD5E1" stroke-width="1">
+          <!-- Simplified continent outlines -->
+          <path d="M130,120 Q160,100 200,115 Q250,100 280,130 Q310,110 340,120 Q360,105 380,125 Q400,108 420,128 Q410,160 390,175 Q360,185 330,170 Q310,185 280,180 Q260,200 230,195 Q200,205 170,190 Q140,180 120,160 Z" fill="#E2E8F0"/>
+          <path d="M440,90 Q500,70 560,85 Q600,75 640,90 Q660,100 650,130 Q630,155 600,165 Q560,175 520,165 Q490,175 460,160 Q435,145 430,120 Z" fill="#E2E8F0"/>
+          <path d="M680,100 Q730,80 790,95 Q840,85 880,100 Q910,115 900,145 Q880,170 840,178 Q800,185 760,175 Q720,180 690,165 Q665,148 670,125 Z" fill="#E2E8F0"/>
+          <path d="M150,220 Q190,205 230,215 Q250,210 270,225 Q280,250 265,270 Q240,290 210,285 Q180,295 155,280 Q130,265 135,245 Z" fill="#E2E8F0"/>
+          <path d="M320,230 Q370,215 420,230 Q450,225 475,245 Q490,270 475,295 Q450,315 415,320 Q375,330 340,315 Q310,300 305,275 Q300,255 320,240 Z" fill="#E2E8F0"/>
+          <path d="M450,230 Q490,215 540,225 Q580,215 620,235 Q650,255 645,285 Q625,315 590,325 Q550,335 510,320 Q475,310 460,285 Q445,265 455,248 Z" fill="#E2E8F0"/>
+          <path d="M700,230 Q750,215 810,225 Q855,215 890,235 Q920,258 910,285 Q885,315 845,325 Q800,340 755,325 Q715,315 700,290 Q688,268 700,248 Z" fill="#E2E8F0"/>
+          <!-- Australia -->
+          <path d="M800,320 Q840,305 870,320 Q895,340 885,365 Q860,385 830,378 Q805,370 795,350 Z" fill="#E2E8F0"/>
+          <!-- Oceans dots -->
+          <circle cx="500" cy="450" r="3" fill="#CBD5E1"/>
+        </svg>
+
+        <!-- Map Pins -->
+        <div class="map-pin pin-ha-noi">
+          <div class="map-ripple"></div>
+          <div class="map-dot"></div>
+          <div class="pin-tooltip">🇻🇳 Hà Nội, Việt Nam</div>
+        </div>
+        <div class="map-pin pin-hcm">
+          <div class="map-dot"></div>
+          <div class="pin-tooltip">🇻🇳 TP. Hồ Chí Minh</div>
+        </div>
+        <div class="map-pin pin-usa">
+          <div class="map-dot"></div>
+          <div class="pin-tooltip">🇺🇸 United States</div>
+        </div>
+        <div class="map-pin pin-uk">
+          <div class="map-dot"></div>
+          <div class="pin-tooltip">🇬🇧 United Kingdom</div>
+        </div>
+        <div class="map-pin pin-japan">
+          <div class="map-dot"></div>
+          <div class="pin-tooltip">🇯🇵 Japan</div>
+        </div>
+      </div>
+      <div class="map-legend">
+        <div class="map-legend-item"><div class="map-legend-dot"></div><span data-vi="Điểm tiếp cận khán giả" data-en="Audience Reach">Điểm tiếp cận khán giả</span></div>
+        <div class="map-legend-item" style="color:var(--text-light);" data-vi="· 50M+ lượt xem từ hơn 20 quốc gia" data-en="· 50M+ views from 20+ countries">· 50M+ lượt xem từ hơn 20 quốc gia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">🎬 <span data-vi="Duy's Portfolio" data-en="Duy's Portfolio">Duy's Portfolio</span></div>
+      <div class="footer-copy" data-vi="© 2025 Nguyễn Đức Duy · Duy's Portfolio · duy83310@gmail.com · 0988 003 813" data-en="© 2025 Nguyen Duc Duy · Duy's Portfolio · duy83310@gmail.com · 0988 003 813">© 2025 Nguyễn Đức Duy · Duy's Portfolio · duy83310@gmail.com · 0988 003 813</div>
+    </div>
+    <div class="social-icons">
+      <a href="https://youtube.com/@pamnox" target="_blank" class="social-icon" title="YouTube"><span class="material-symbols-outlined" style="font-size:1.2rem;">smart_display</span></a>
+      <a href="https://www.facebook.com/Duy.beu.50" target="_blank" class="social-icon" title="Facebook"><span class="material-symbols-outlined" style="font-size:1.2rem;">group</span></a>
+      <a href="mailto:duy83310@gmail.com" class="social-icon" title="Email"><span class="material-symbols-outlined" style="font-size:1.2rem;">mail</span></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+  // Form submit
+  document.getElementById('the-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const msg   = document.getElementById('message').value.trim();
+    const agree = document.getElementById('agree').checked;
+    if (!fname || !email || !msg || !agree) {
+      alert('Vui lòng điền đầy đủ các trường bắt buộc và đồng ý điều khoản!');
+      return;
+    }
+    const btn = document.getElementById('submit-btn');
+    btn.innerHTML = '<span style="animation:spin 0.8s linear infinite;display:inline-block;">⏳</span> Đang gửi...';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = '✅ Đã gửi thành công!';
+      document.getElementById('success-msg').classList.add('show');
+      document.getElementById('the-form').reset();
+    }, 1500);
+  });
+
+  // Map pins tooltip on click (mobile)
+  document.querySelectorAll('.map-pin').forEach(pin => {
+    pin.addEventListener('click', () => {
+      const tooltip = pin.querySelector('.pin-tooltip');
+      tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+</script>
+<style>
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+</style>
+<script src="lang.js"></script>
+</body>
+</html>

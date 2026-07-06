@@ -1,0 +1,18 @@
+# Exclude scripts and backups
+videos_backup/
+rename_brand.py
+rename_brand.ps1
+verify_brand.py
+find_pamnox.py
+check_ffmpeg.py
+compress_videos.py
+
+# Duplicate images
+img/hậu trường.jpg
+img/hậu trường 2.jpg
+img/hậu trường 3.jpg
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini

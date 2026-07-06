@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Về Tác Giả | Duy's Portfolio</title>
+  <meta name="description" content="Nguyễn Đức Duy — 2D Animator & AI Video Producer, sinh viên CNTT năm 3 Đại học Thăng Long, chủ kênh YouTube Pamnox 400K+ Subscribers."/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"/>
+  <style>
+    /* Hero bio */
+    .bio-section { padding-top: calc(80px + var(--spacing-xl)); padding-bottom: var(--spacing-xl); }
+    .bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); align-items: center; }
+    @media (max-width: 768px) { .bio-grid { grid-template-columns: 1fr; gap: var(--spacing-lg); } .bio-photo-wrap { order: -1; } }
+
+    /* Photo */
+    .bio-photo-outer { position: relative; display: flex; justify-content: center; }
+    .bio-photo-blob { position: absolute; inset: -15%; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation: morph 9s ease-in-out infinite; background: var(--pink-cta); opacity: 0.45; z-index: 0; }
+    .bio-photo-blob2 { position: absolute; inset: -8%; border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; animation: morph 11s ease-in-out infinite reverse; background: var(--yellow); opacity: 0.25; z-index: 0; }
+    .bio-photo-frame { position: relative; z-index: 1; width: 100%; max-width: 420px; aspect-ratio: 1; border-radius: var(--radius-xl); overflow: hidden; border: 4px solid white; box-shadow: var(--shadow-lg); }
+    .bio-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .bio-badge-float { position: absolute; bottom: -10px; right: -10px; z-index: 2; background: var(--primary); color: white; padding: 10px 18px; border-radius: var(--radius-lg); font-weight: 700; font-size: 0.88rem; box-shadow: var(--shadow); }
+
+    /* Text */
+    .bio-tag { margin-bottom: var(--spacing-sm); }
+    .bio-h1  { margin-bottom: var(--spacing-md); }
+    .bio-h1 span { color: var(--primary); }
+    .bio-desc { color: var(--text-mid); margin-bottom: var(--spacing-md); }
+    .bio-stats { display: flex; gap: var(--spacing-lg); margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1.5px solid var(--outline); flex-wrap: wrap; }
+
+    /* Passion section */
+    .passion-section { background: var(--bg-alt); }
+    .passion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
+    @media (max-width: 768px) { .passion-grid { grid-template-columns: 1fr; } }
+
+    /* Gallery / BTS */
+    .gallery-section { }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto; gap: var(--gutter); }
+    .gallery-grid .g-wide { grid-column: span 2; grid-row: span 2; }
+    .g-cell { border-radius: var(--radius-lg); overflow: hidden; border: 2.5px solid white; box-shadow: var(--shadow-sm); aspect-ratio: 1; transition: all var(--transition); }
+    .g-cell:hover { transform: scale(1.03); box-shadow: var(--shadow); }
+    .g-wide { aspect-ratio: auto; }
+    .g-cell img, .g-wide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .g-icon-cell { background: var(--pink-cta); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: var(--spacing-md); text-align: center; }
+    .g-icon-cell .material-symbols-outlined { font-size: 2.5rem; color: var(--primary); font-variation-settings: 'FILL' 1; }
+    .g-icon-cell p { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pink-cta-text); }
+    @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2,1fr); } .gallery-grid .g-wide { grid-column: span 2; grid-row: span 1; aspect-ratio: 16/9; } }
+    @media (max-width: 480px) { .gallery-grid { grid-template-columns: 1fr; } .gallery-grid .g-wide { grid-column: auto; } }
+
+    /* Skills */
+    .skill-bar-wrap { margin-bottom: var(--spacing-md); }
+    .skill-bar-label { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.92rem; font-weight: 700; color: var(--text-mid); }
+    .skill-bar-bg { height: 10px; border-radius: var(--radius-full); background: var(--outline); overflow: hidden; }
+    .skill-bar-fill { height: 100%; border-radius: var(--radius-full); background: linear-gradient(90deg, var(--primary-light), var(--primary)); transition: width 1.2s ease; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: var(--outline); border-radius: 2px; }
+    .tl-item { position: relative; margin-bottom: var(--spacing-md); }
+    .tl-item::before { content: ''; position: absolute; left: -26px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 3px solid white; box-shadow: 0 0 0 3px var(--pink-cta); }
+    .tl-date { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--primary); margin-bottom: 4px; }
+    .tl-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+    .tl-org  { font-size: 0.88rem; color: var(--text-light); }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">D</div>
+      <span data-vi="Duy's Portfolio" data-en="Duy's Portfolio">Duy's Portfolio</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a></li>
+      <li><a href="portfolio.html" data-vi="Portfolio" data-en="Portfolio">Portfolio</a></li>
+      <li><a href="about.html" class="active" data-vi="Về tác giả" data-en="About">Về tác giả</a></li>
+      <li><a href="contact.html" data-vi="Liên hệ" data-en="Contact">Liên hệ</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta" data-vi="Hợp tác ngay ✨" data-en="Let's Collaborate ✨">Hợp tác ngay ✨</a>
+    <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-mobile" id="mobile-menu">
+  <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+  <a href="portfolio.html" data-vi="Portfolio" data-en="Portfolio">Portfolio</a>
+  <a href="about.html" class="active" data-vi="Về tác giả" data-en="About">Về tác giả</a>
+  <a href="contact.html" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+  <a href="contact.html" class="btn btn-primary" style="text-align:center;margin-top:8px;" data-vi="Hợp tác ngay ✨" data-en="Let's Collaborate ✨">Hợp tác ngay ✨</a>
+</div>
+
+<main>
+
+<!-- ── Bio Section ─────────────────────────────────────── -->
+<section class="bio-section">
+  <div class="container">
+    <div class="bio-grid">
+      <!-- Photo -->
+      <div class="bio-photo-wrap">
+        <div class="bio-photo-outer reveal">
+          <div class="bio-photo-blob"></div>
+          <div class="bio-photo-blob2"></div>
+          <div class="bio-photo-frame">
+            <img src="img/avt.jpg" alt="Nguyễn Đức Duy — Duy's Portfolio"/>
+          </div>
+          <div class="bio-badge-float">🎓 GPA 3.7/4.0</div>
+        </div>
+      </div>
+      <!-- Text -->
+      <div class="reveal">
+        <span class="badge badge-yellow bio-tag" data-vi="Gặp gỡ người tạo ra Pamnox" data-en="Meet the Creator of Pamnox">Gặp gỡ người tạo ra Pamnox</span>
+        <h1 class="display-lg bio-h1">Crafting <span>Safe &amp; Joyful</span><br/><span data-vi="Content for Kids" data-en="Content for Kids">Content for Kids</span></h1>
+        <p class="body-lg bio-desc" data-vi="Xin chào! Mình là &lt;strong&gt;Nguyễn Đức Duy&lt;/strong&gt; — sinh viên CNTT năm 3 tại ĐH Thăng Long (GPA 3.7/4.0), 2D Animator &amp; AI Video Producer đứng sau kênh &lt;strong&gt;Pamnox&lt;/strong&gt; với hơn 400.000 người đăng ký." data-en="Hi! I'm &lt;strong&gt;Nguyen Duc Duy&lt;/strong&gt; — a 3rd-year IT student at Thang Long University (GPA 3.7/4.0), 2D Animator &amp; AI Video Producer behind the &lt;strong&gt;Pamnox&lt;/strong&gt; channel with 400K+ subscribers.">
+          Xin chào! Mình là <strong>Nguyễn Đức Duy</strong> — sinh viên Công nghệ Thông tin năm 3 tại Đại học Thăng Long (GPA 3.7/4.0), đồng thời là <strong>2D Animator</strong> và <strong>AI Video Producer</strong> đứng sau kênh YouTube <strong>Pamnox</strong> với hơn 400.000 người đăng ký.
+        </p>
+        <p class="body-md" style="color:var(--text-mid);margin-bottom:var(--spacing-md);">
+          Mình kết hợp tư duy logic của một sinh viên IT với niềm đam mê sáng tạo nội dung trực quan, xây dựng những thế giới hoạt hình an toàn, vui tươi và đầy cảm hứng cho thế hệ tương lai.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="contact.html" class="btn btn-primary">
+            <span class="material-symbols-outlined" style="font-size:1.1rem;">mail</span> <span data-vi="Liên hệ hợp tác" data-en="Contact for Collaboration">Liên hệ hợp tác</span>
+          </a>
+          <a href="portfolio.html" class="btn btn-outline" data-vi="Xem Portfolio →" data-en="View Portfolio →">Xem Portfolio →</a>
+        </div>
+        <div class="bio-stats">
+          <div class="stat-item">
+            <div class="stat-number">400K+</div>
+            <div class="stat-label" data-vi="Subscribers" data-en="Subscribers">Subscribers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50M+</div>
+            <div class="stat-label" data-vi="Lượt xem" data-en="Total Views">Lượt xem</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">🥉</div>
+            <div class="stat-label" data-vi="Olympic Toán SV" data-en="Math Olympiad">Olympic Toán SV</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── My Passion ──────────────────────────────────────── -->
+<section class="passion-section section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:var(--spacing-xl);" class="reveal">
+      <span class="badge badge-pink" style="margin-bottom:12px;" data-vi="Đam mê của tôi" data-en="My Passion">Đam mê của tôi</span>
+      <h2 class="display-lg" style="margin-bottom:var(--spacing-sm);" data-vi="3 Trụ Cột Sáng Tạo" data-en="3 Creative Pillars">3 Trụ Cột Sáng Tạo</h2>
+      <p class="body-lg" style="color:var(--text-mid);max-width:560px;margin:0 auto;" data-vi="Mọi nội dung mình tạo ra đều được xây dựng trên ba giá trị cốt lõi — đảm bảo internet trở thành nơi tốt hơn cho trẻ em." data-en="Every piece of content I create is built on three core values — making the internet a better place for children.">Mọi nội dung mình tạo ra đều được xây dựng trên ba giá trị cốt lõi — đảm bảo internet trở thành nơi tốt hơn cho trẻ em.</p>
+    </div>
+    <div class="passion-grid">
+      <div class="passion-card reveal">
+        <div class="passion-icon" style="background:var(--pink-cta);">
+          <span class="material-symbols-outlined" style="color:var(--primary);font-variation-settings:'FILL' 1;font-size:2rem;">child_care</span>
+        </div>
+        <h3 class="headline-md" style="margin-bottom:10px;" data-vi="An Toàn Là Trên Hết" data-en="Safety First">An Toàn Là Trên Hết</h3>
+        <p class="body-md" style="color:var(--text-mid);" data-vi="Mọi nội dung đều được kiểm duyệt kỹ lưỡng, đảm bảo 100% an toàn cho trẻ em ở mọi lứa tuổi — phụ huynh có thể hoàn toàn tin tưởng." data-en="All content is meticulously screened, ensuring 100% safety for children of all ages — parents can trust completely.">Mọi nội dung đều được kiểm duyệt kỹ lưỡng, đảm bảo 100% an toàn cho trẻ em ở mọi lứa tuổi — phụ huynh có thể hoàn toàn tin tưởng.</p>
+      </div>
+      <div class="passion-card reveal" style="transition-delay:0.1s;">
+        <div class="passion-icon" style="background:var(--yellow);">
+          <span class="material-symbols-outlined" style="color:var(--yellow-text);font-variation-settings:'FILL' 1;font-size:2rem;">lightbulb</span>
+        </div>
+        <h3 class="headline-md" style="margin-bottom:10px;" data-vi="Học Qua Vui Chơi" data-en="Active Learning">Học Qua Vui Chơi</h3>
+        <p class="body-md" style="color:var(--text-mid);" data-vi="Không chỉ giải trí — mỗi video đều cài cắm bài học giáo dục, khuyến khích tư duy sáng tạo và phát triển kỹ năng nhận thức cho bé." data-en="Not just entertainment — every video embeds educational lessons, encouraging creative thinking and cognitive development.">Không chỉ giải trí — mỗi video đều cài cắm bài học giáo dục, khuyến khích tư duy sáng tạo và phát triển kỹ năng nhận thức cho bé.</p>
+      </div>
+      <div class="passion-card reveal" style="transition-delay:0.2s;">
+        <div class="passion-icon" style="background:#EDE9FE;">
+          <span class="material-symbols-outlined" style="color:#7C3AED;font-variation-settings:'FILL' 1;font-size:2rem;">auto_awesome</span>
+        </div>
+        <h3 class="headline-md" style="margin-bottom:10px;" data-vi="Chất Lượng Cao" data-en="Premium Quality">Chất Lượng Cao</h3>
+        <p class="body-md" style="color:var(--text-mid);" data-vi="Ứng dụng AI video thế hệ mới và kỹ thuật Rigging chuyên nghiệp trong Moho, rút ngắn 30% thời gian sản xuất mà vẫn giữ nguyên chất lượng." data-en="Using next-gen AI video tools and professional Rigging in Moho, reducing production time by 30% while maintaining quality.">Ứng dụng AI video thế hệ mới và kỹ thuật Rigging chuyên nghiệp trong Moho, rút ngắn 30% thời gian sản xuất mà vẫn giữ nguyên chất lượng.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills + Timeline ────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-xl);align-items:start;" class="bio-grid">
+      <!-- Skills -->
+      <div class="reveal">
+        <span class="badge badge-yellow" style="margin-bottom:var(--spacing-sm);" data-vi="Kỹ năng" data-en="Skills">Kỹ năng</span>
+        <h2 class="headline-md" style="margin-bottom:var(--spacing-lg);" data-vi="Năng lực sản xuất" data-en="Production Skills">Năng lực sản xuất</h2>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>2D Animation (Moho)</span><span>90%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90" style="width:0;"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>AI Video Production</span><span>88%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88" style="width:0;"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Shorts / TikTok Content</span><span>85%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85" style="width:0;"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Tư duy Content &amp; Kịch bản</span><span>82%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82" style="width:0;"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Quản lý Assets &amp; Timeline</span><span>80%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80" style="width:0;"></div></div>
+        </div>
+      </div>
+      <!-- Timeline -->
+      <div class="reveal" style="transition-delay:0.1s;">
+        <span class="badge badge-pink" style="margin-bottom:var(--spacing-sm);">Hành trình</span>
+        <h2 class="headline-md" style="margin-bottom:var(--spacing-lg);" data-vi="Kinh nghiệm &amp; Giáo dục" data-en="Experience &amp; Education">Kinh nghiệm &amp; Giáo dục</h2>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-date">07/2025 – 01/2026</div>
+            <div class="tl-title">2D Animator — Kênh Pamnox (400K Subs)</div>
+            <div class="tl-org">Willy Studio</div>
+            <p class="body-md" style="color:var(--text-light);margin-top:4px;">Phụ trách toàn bộ diễn họa 2D, xây dựng hệ thống Rigging với Moho Smart Bones, rút ngắn 30% thời gian sản xuất.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2022 – 2025</div>
+            <div class="tl-title">Thành viên Ban Kỹ thuật &amp; Nghiên cứu</div>
+            <div class="tl-org">TLIT — Câu lạc bộ CNTT Đại học Thăng Long</div>
+            <p class="body-md" style="color:var(--text-light);margin-top:4px;">Nghiên cứu Generative AI, tổ chức workshop Git/GitHub và chia sẻ kỹ thuật cho sinh viên.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2024</div>
+            <div class="tl-title">Huy chương Đồng — Olympic Toán học Sinh viên Toàn quốc</div>
+            <div class="tl-org">Đại học Thăng Long</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2026</div>
+            <div class="tl-title">Học bổng Samsung Innovation Campus</div>
+            <div class="tl-org">Chương trình Phát triển Nhân tài Công nghệ</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2023 – Nay</div>
+            <div class="tl-title">Cử nhân Công nghệ Thông tin (GPA 3.7/4.0)</div>
+            <div class="tl-org">Đại học Thăng Long, Hà Nội</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BTS Gallery ─────────────────────────────────────── -->
+<section class="gallery-section section" style="background:var(--bg-alt);padding-top:var(--spacing-xl);padding-bottom:var(--spacing-xl);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:var(--spacing-lg);" class="reveal">
+      <h2 class="headline-md" style="margin-bottom:8px;">Hậu trường sáng tạo</h2>
+      <p class="body-md" style="color:var(--text-light);">Những khoảnh khắc đằng sau máy quay &amp; màn hình</p>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="g-cell g-wide" style="aspect-ratio:auto;min-height:300px;">
+        <img src="img/hau_truong_2.jpg" alt="Không gian làm việc của Duy's Portfolio"/>
+      </div>
+      <div class="g-cell"><img src="img/hau_truong_1.jpg" alt="Màn hình sáng tác hoạt hình"/></div>
+      <div class="g-cell g-icon-cell" aria-hidden="true">
+        <span class="material-symbols-outlined">movie_creation</span>
+        <p>Behind<br/>The Scene</p>
+      </div>
+      <div class="g-cell"><img src="img/hau_truong_3.jpg" alt="Góc view từ studio"/></div>
+      <div class="g-cell"><img src="img/avt.jpg" alt="Nguyễn Đức Duy tác giả"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Collaborate ─────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div style="background:linear-gradient(135deg,var(--pink-cta) 0%,#FADADD 100%);border-radius:var(--radius-xl);padding:var(--spacing-xl);text-align:center;position:relative;overflow:hidden;" class="reveal">
+      <div style="position:absolute;width:250px;height:250px;background:rgba(201,80,78,0.1);border-radius:50%;top:-80px;left:-80px;"></div>
+      <div style="position:absolute;width:200px;height:200px;background:rgba(201,80,78,0.07);border-radius:50%;bottom:-60px;right:-40px;"></div>
+      <div style="position:relative;z-index:1;">
+        <h2 style="font-size:2rem;font-weight:700;color:var(--pink-cta-text);margin-bottom:var(--spacing-sm);" data-vi="Ready to collaborate? 🤝" data-en="Ready to collaborate? 🤝">Ready to collaborate? 🤝</h2>
+        <p class="body-lg" style="color:var(--text-mid);max-width:520px;margin:0 auto var(--spacing-lg);" data-vi="Dù bạn là thương hiệu, nhà xuất bản hay phụ huynh muốn tạo nội dung riêng cho bé — mình rất muốn lắng nghe ý tưởng của bạn!" data-en="Whether you're a brand, publisher, or parent wanting custom content for your child — I'd love to hear your ideas!">Dù bạn là thương hiệu, nhà xuất bản hay phụ huynh muốn tạo nội dung riêng cho bé — mình rất muốn lắng nghe ý tưởng của bạn!</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a href="contact.html" class="btn btn-primary">
+            <span class="material-symbols-outlined" style="font-size:1.1rem;">mail</span>
+            <span data-vi="Gửi tin nhắn" data-en="Send a Message">Gửi tin nhắn</span>
+          </a>
+          <a href="portfolio.html" class="btn btn-outline" style="border-color:var(--pink-cta-text);color:var(--pink-cta-text);" data-vi="Xem Portfolio" data-en="View Portfolio">Xem Portfolio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">🎬 <span data-vi="Duy's Portfolio" data-en="Duy's Portfolio">Duy's Portfolio</span></div>
+      <div class="footer-copy" data-vi="© 2025 Nguyễn Đức Duy · Duy's Portfolio. Tất cả quyền được bảo lưu." data-en="© 2025 Nguyen Duc Duy · Duy's Portfolio. All rights reserved.">© 2025 Nguyễn Đức Duy · Duy's Portfolio. Tất cả quyền được bảo lưu.</div>
+    </div>
+    <div class="social-icons">
+      <a href="https://youtube.com/@pamnox" target="_blank" class="social-icon" title="YouTube"><span class="material-symbols-outlined" style="font-size:1.2rem;">smart_display</span></a>
+      <a href="https://www.facebook.com/Duy.beu.50" target="_blank" class="social-icon" title="Facebook"><span class="material-symbols-outlined" style="font-size:1.2rem;">group</span></a>
+      <a href="mailto:duy83310@gmail.com" class="social-icon" title="Email"><span class="material-symbols-outlined" style="font-size:1.2rem;">mail</span></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+
+  // Scroll reveal + skill bars
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // animate skill bars inside this element
+        e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+  // Sticky nav hide on scroll down
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.nav');
+    const y = window.scrollY;
+    nav.style.transition = 'transform 0.35s ease';
+    nav.style.transform = (y > lastY && y > 80) ? 'translateY(-100%)' : 'translateY(0)';
+    lastY = y;
+  });
+</script>
+<script src="lang.js"></script>
+</body>
+</html>

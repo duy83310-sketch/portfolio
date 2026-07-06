@@ -1,0 +1,291 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio | Duy's Portfolio</title>
+  <meta name="description" content="Dự án sáng tạo của Duy's Portfolio — bộ sưu tập hoạt hình 2D, video giáo dục, nhạc thiếu nhi và Shorts cho kênh YouTube Pamnox 400K+."/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"/>
+  <style>
+    .page-header { padding-top: calc(80px + var(--spacing-xl)); padding-bottom: var(--spacing-lg); position: relative; overflow: hidden; }
+    .page-header .blob { pointer-events: none; }
+    .page-header-inner { position: relative; z-index: 1; }
+    .page-header h1 { max-width: 700px; margin-bottom: var(--spacing-sm); }
+    .page-header p  { max-width: 560px; color: var(--text-mid); }
+
+    /* Project grid */
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
+    @media (max-width: 1024px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .projects-grid { grid-template-columns: 1fr; } }
+
+    .proj-card { background: var(--surface); border-radius: var(--radius-lg); overflow: hidden; border: 1.5px solid var(--outline); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; transition: all var(--transition); }
+    .proj-card:hover { transform: translateY(-6px) scale(1.015); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
+
+    .proj-thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; background: #2C1A18; }
+    .proj-thumb img, .proj-thumb video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; display: block; }
+    .proj-card:hover .proj-thumb img, .proj-card:hover .proj-thumb video { transform: scale(1.03); }
+    .proj-thumb-overlay { position: absolute; inset: 0; background: rgba(44,26,24,0.15); display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+    .proj-card:hover .proj-thumb-overlay { background: rgba(44,26,24,0.08); }
+    .proj-play { width: 68px; height: 68px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 28px rgba(201,80,78,0.40); transform: scale(0.88); transition: all var(--transition); }
+    .proj-card:hover .proj-play { transform: scale(1); box-shadow: 0 12px 36px rgba(201,80,78,0.50); }
+    .proj-duration { position: absolute; top: 12px; right: 12px; background: rgba(44,26,24,0.75); color: white; padding: 4px 10px; border-radius: var(--radius-full); font-size: 0.78rem; font-weight: 700; backdrop-filter: blur(8px); }
+
+    .proj-body { padding: var(--spacing-md); flex: 1; display: flex; flex-direction: column; }
+    .proj-badge-row { margin-bottom: 10px; }
+    .proj-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: var(--text-dark); }
+    .proj-desc  { font-size: 0.92rem; color: var(--text-light); flex: 1; }
+
+    /* Load more */
+    .load-more { text-align: center; margin-top: var(--spacing-lg); }
+    .btn-load { padding: 14px 40px; border: 2px solid var(--text-dark); color: var(--text-dark); border-radius: var(--radius-full); background: transparent; font-family: var(--font-main); font-weight: 700; font-size: 1rem; cursor: pointer; transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px; }
+    .btn-load:hover { background: var(--text-dark); color: white; transform: scale(1.03); }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">D</div>
+      <span data-vi="Duy's Portfolio" data-en="Duy's Portfolio">Duy's Portfolio</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a></li>
+      <li><a href="portfolio.html" class="active" data-vi="Portfolio" data-en="Portfolio">Portfolio</a></li>
+      <li><a href="about.html" data-vi="Về tác giả" data-en="About">Về tác giả</a></li>
+      <li><a href="contact.html" data-vi="Liên hệ" data-en="Contact">Liên hệ</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta" data-vi="Hợp tác ngay ✨" data-en="Let's Collaborate ✨">Hợp tác ngay ✨</a>
+    <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-mobile" id="mobile-menu">
+  <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+  <a href="portfolio.html" class="active" data-vi="Portfolio" data-en="Portfolio">Portfolio</a>
+  <a href="about.html" data-vi="Về tác giả" data-en="About">Về tác giả</a>
+  <a href="contact.html" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+  <a href="contact.html" class="btn btn-primary" style="text-align:center;margin-top:8px;" data-vi="Hợp tác ngay ✨" data-en="Let's Collaborate ✨">Hợp tác ngay ✨</a>
+</div>
+
+<main>
+<!-- Page Header -->
+<section class="page-header">
+  <div class="blob blob-coral" style="width:450px;height:450px;top:-120px;right:-100px;z-index:0;"></div>
+  <div class="blob blob-yellow" style="width:300px;height:300px;bottom:-80px;left:-80px;z-index:0;"></div>
+  <div class="container">
+    <div class="page-header-inner">
+      <span class="badge badge-yellow" style="margin-bottom:var(--spacing-sm);" data-vi="🎬 Bộ sưu tập sáng tạo" data-en="🎬 Creative Collection">🎬 Bộ sưu tập sáng tạo</span>
+      <h1 class="display-lg fade-up" data-vi="Những Thế Giới Kỳ Diệu&lt;br/&gt;&lt;span style='color:var(--primary);'&gt;Chúng Tôi Đã Tạo Ra&lt;/span&gt;" data-en="Magical Worlds&lt;br/&gt;&lt;span style='color:var(--primary);'&gt;We Have Created&lt;/span&gt;">Những Thế Giới Kỳ Diệu<br/><span style="color:var(--primary);">Chúng Tôi Đã Tạo Ra</span></h1>
+      <p class="body-lg fade-up fade-up-1" data-vi="Khám phá bộ sưu tập hoạt hình 2D, video giáo dục, nhạc thiếu nhi và Shorts được sản xuất với tâm huyết — an toàn, vui tươi, đầy màu sắc." data-en="Explore our collection of 2D animations, educational videos, children's music and Shorts crafted with passion — safe, joyful, colorful.">Khám phá bộ sưu tập hoạt hình 2D, video giáo dục, nhạc thiếu nhi và Shorts được sản xuất với tâm huyết — an toàn, vui tươi, đầy màu sắc.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Filter Bar -->
+<section style="padding: var(--spacing-md) 0 var(--spacing-lg);">
+  <div class="container">
+    <div class="filter-bar" id="proj-filter">
+      <button class="filter-pill active" data-filter="all" data-vi="Tất cả" data-en="All">Tất cả</button>
+      <button class="filter-pill" data-filter="animation" data-vi="🎨 Hoạt hình 2D" data-en="🎨 2D Animation">🎨 Hoạt hình 2D</button>
+      <button class="filter-pill" data-filter="story" data-vi="📖 Truyện kể" data-en="📖 Storytime">📖 Truyện kể</button>
+      <button class="filter-pill" data-filter="music" data-vi="🎵 Nhạc thiếu nhi" data-en="🎵 Kids Music">🎵 Nhạc thiếu nhi</button>
+      <button class="filter-pill" data-filter="edu" data-vi="🔬 Giáo dục" data-en="🔬 Educational">🔬 Giáo dục</button>
+      <button class="filter-pill" data-filter="shorts" data-vi="⚡ Shorts" data-en="⚡ Shorts">⚡ Shorts</button>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="projects-grid" id="projects-grid">
+      <!-- Card 1 -->
+      <article class="proj-card reveal" data-cat="story">
+        <div class="proj-thumb">
+          <video src="videos/hansel_gretel_short.mp4" poster="img/hansel_gretel_short_poster.jpg" playsinline controls preload="metadata" style="width:100%; height:100%; object-fit:cover;"></video>
+        </div>
+        <div class="proj-body">
+          <div class="proj-badge-row"><span class="badge badge-outline" data-vi="Truyện kể" data-en="Storytime">Truyện kể</span></div>
+          <div class="proj-title" data-vi="Hansel and Gretel (Short)" data-en="Hansel and Gretel (Short)">Hansel and Gretel (Short)</div>
+          <div class="proj-desc" data-vi="Truyện cổ tích thiếu nhi kinh điển." data-en="Classic children's fairy tale.">Truyện cổ tích thiếu nhi kinh điển.</div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="proj-card reveal" data-cat="music" style="transition-delay:0.07s;">
+        <div class="proj-thumb">
+          <video src="videos/kpop_full.mp4" poster="img/kpop_full_poster.jpg" playsinline controls preload="metadata" style="width:100%; height:100%; object-fit:cover;"></video>
+        </div>
+        <div class="proj-body">
+          <div class="proj-badge-row"><span class="badge badge-pink" data-vi="Nhạc thiếu nhi" data-en="Kids Music">Nhạc thiếu nhi</span></div>
+          <div class="proj-title" data-vi="K-Pop Cover (Bản Full)" data-en="K-Pop Cover (Full)">K-Pop Cover (Bản Full)</div>
+          <div class="proj-desc" data-vi="Video nhạc cover sôi động dành cho các bé." data-en="Exciting music cover video for kids.">Video nhạc cover sôi động dành cho các bé.</div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="proj-card reveal" data-cat="music" style="transition-delay:0.14s;">
+        <div class="proj-thumb" style="aspect-ratio:9/16;max-height:340px;">
+          <video src="videos/kpop_short.mp4" poster="img/kpop_short_poster.jpg" playsinline controls preload="metadata" style="width:100%; height:100%; object-fit:cover;"></video>
+        </div>
+        <div class="proj-body">
+          <div class="proj-badge-row"><span class="badge" style="background:#FF6B6B;color:white;">⚡ Shorts</span></div>
+          <div class="proj-title" data-vi="K-Pop Cover (Short)" data-en="K-Pop Cover (Short)">K-Pop Cover (Short)</div>
+          <div class="proj-desc" data-vi="Phiên bản video ngắn bắt tai và dễ thương." data-en="Catchy and cute short video version.">Phiên bản video ngắn bắt tai và dễ thương.</div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="proj-card reveal" data-cat="animation" style="transition-delay:0.07s;">
+        <div class="proj-thumb">
+          <video src="videos/me_cung_tap78.mp4" poster="img/me_cung_tap78_poster.jpg" playsinline controls preload="metadata" style="width:100%; height:100%; object-fit:cover;"></video>
+        </div>
+        <div class="proj-body">
+          <div class="proj-badge-row"><span class="badge badge-yellow" data-vi="Hoạt hình 2D" data-en="2D Animation">Hoạt hình 2D</span></div>
+          <div class="proj-title" data-vi="Mê Cung - Tập 78" data-en="Maze - Episode 78">Mê Cung - Tập 78</div>
+          <div class="proj-desc" data-vi="Hành trình giải mã mê cung kỳ thú." data-en="An exciting journey to solve the maze.">Hành trình giải mã mê cung kỳ thú.</div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="proj-card reveal" data-cat="animation" style="transition-delay:0.14s;">
+        <div class="proj-thumb">
+          <video src="videos/quay_dung_ai.mp4" poster="img/quay_dung_ai_poster.jpg" playsinline controls preload="metadata" style="width:100%; height:100%; object-fit:cover;"></video>
+        </div>
+        <div class="proj-body">
+          <div class="proj-badge-row"><span class="badge badge-yellow" data-vi="Hoạt hình 2D" data-en="2D Animation">Hoạt hình 2D</span></div>
+          <div class="proj-title" data-vi="Quay dựng kết hợp AI" data-en="AI-Assisted Video Production">Quay dựng kết hợp AI</div>
+          <div class="proj-desc" data-vi="Ứng dụng trí tuệ nhân tạo để tối ưu hóa hình ảnh và chuyển động." data-en="Applying artificial intelligence to optimize visuals and motion.">Ứng dụng trí tuệ nhân tạo để tối ưu hóa hình ảnh và chuyển động.</div>
+        </div>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="proj-card reveal" data-cat="animation" style="transition-delay:0.21s;">
+        <div class="proj-thumb">
+          <video src="videos/quay_dung_kb10.mp4" poster="img/quay_dung_kb10_poster.jpg" playsinline controls preload="metadata" style="width:100%; height:100%; object-fit:cover;"></video>
+        </div>
+        <div class="proj-body">
+          <div class="proj-badge-row"><span class="badge badge-yellow" data-vi="Hoạt hình 2D" data-en="2D Animation">Hoạt hình 2D</span></div>
+          <div class="proj-title" data-vi="Quay Dựng KB10" data-en="Production KB10">Quay Dựng KB10</div>
+          <div class="proj-desc" data-vi="Chất lượng sản xuất tiêu chuẩn cao, hình ảnh sắc nét." data-en="High standard production quality with sharp visuals.">Chất lượng sản xuất tiêu chuẩn cao, hình ảnh sắc nét.</div>
+        </div>
+      </article>
+
+      <!-- Card 7 -->
+      <article class="proj-card reveal" data-cat="animation">
+        <div class="proj-thumb">
+          <video src="videos/stick_man_tap1.mp4" poster="img/stick_man_tap1_poster.jpg" playsinline controls preload="metadata" style="width:100%; height:100%; object-fit:cover;"></video>
+        </div>
+        <div class="proj-body">
+          <div class="proj-badge-row"><span class="badge badge-yellow" data-vi="Hoạt hình 2D" data-en="2D Animation">Hoạt hình 2D</span></div>
+          <div class="proj-title" data-vi="Stick Man - Tập 1" data-en="Stick Man - Episode 1">Stick Man - Tập 1</div>
+          <div class="proj-desc" data-vi="Series phim hoạt hình người que vô cùng hài hước." data-en="Extremely funny stick man animation series.">Series phim hoạt hình người que vô cùng hài hước.</div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="load-more reveal">
+      <button class="btn-load" id="load-more-btn">
+        <span class="material-symbols-outlined">auto_awesome</span>
+        <span data-vi="Xem thêm dự án" data-en="Load more projects">Xem thêm dự án</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="cta-big reveal" style="background:linear-gradient(135deg,var(--pink-cta) 0%,#F9D6D4 100%);border-radius:var(--radius-xl);padding:var(--spacing-xl);display:flex;align-items:center;justify-content:space-between;gap:var(--spacing-lg);flex-wrap:wrap;position:relative;overflow:hidden;">
+      <div class="deco-circle" style="position:absolute;width:200px;height:200px;background:rgba(201,80,78,0.1);border-radius:50%;top:-60px;right:-40px;"></div>
+      <div style="position:relative;z-index:1;">
+        <h2 style="font-size:1.8rem;font-weight:700;color:var(--pink-cta-text);margin-bottom:8px;" data-vi="Muốn tạo nội dung riêng cho bé?" data-en="Want custom content for your little ones?">Muốn tạo nội dung riêng cho bé?</h2>
+        <p class="body-lg" style="color:var(--text-mid);max-width:420px;" data-vi="Hãy liên hệ để chúng tôi cùng sản xuất nội dung chất lượng cao cho thương hiệu của bạn." data-en="Contact us to produce high-quality content that elevates your brand.">Hãy liên hệ để chúng tôi cùng sản xuất nội dung chất lượng cao cho thương hiệu của bạn.</p>
+      </div>
+      <div style="position:relative;z-index:1;flex-shrink:0;">
+        <a href="contact.html" class="btn btn-primary" style="font-size:1.05rem;" data-vi="Liên hệ ngay →" data-en="Contact us →">Liên hệ ngay →</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">🎬 <span data-vi="Duy's Portfolio" data-en="Duy's Portfolio">Duy's Portfolio</span></div>
+      <div class="footer-copy" data-vi="© 2025 Nguyễn Đức Duy · Duy's Portfolio. Tất cả quyền được bảo lưu." data-en="© 2025 Nguyen Duc Duy · Duy's Portfolio. All rights reserved.">© 2025 Nguyễn Đức Duy · Duy's Portfolio. Tất cả quyền được bảo lưu.</div>
+    </div>
+    <div class="social-icons">
+      <a href="https://youtube.com/@pamnox" target="_blank" class="social-icon" title="YouTube"><span class="material-symbols-outlined" style="font-size:1.2rem;">smart_display</span></a>
+      <a href="https://www.facebook.com/Duy.beu.50" target="_blank" class="social-icon" title="Facebook"><span class="material-symbols-outlined" style="font-size:1.2rem;">group</span></a>
+      <a href="mailto:duy83310@gmail.com" class="social-icon" title="Email"><span class="material-symbols-outlined" style="font-size:1.2rem;">mail</span></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+
+  // Filter logic with smooth animation
+  const filterBtns = document.querySelectorAll('#proj-filter .filter-pill');
+  const cards = document.querySelectorAll('#projects-grid .proj-card');
+
+  // Set initial transition style on all cards
+  cards.forEach(c => {
+    c.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c => {
+        const match = f === 'all' || c.dataset.cat === f;
+        if (match) {
+          c.style.display = '';
+          requestAnimationFrame(() => {
+            c.style.opacity = '1';
+            c.style.transform = 'translateY(0) scale(1)';
+          });
+        } else {
+          c.style.opacity = '0';
+          c.style.transform = 'translateY(12px) scale(0.97)';
+          setTimeout(() => { c.style.display = 'none'; }, 280);
+        }
+      });
+    });
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+  // Load more (demo)
+  document.getElementById('load-more-btn').addEventListener('click', function() {
+    this.textContent = '✅ Đã hiển thị tất cả dự án!';
+    this.disabled = true;
+    this.style.opacity = '0.6';
+  });
+  // Auto seek videos to 0.1s to force first-frame thumbnail rendering
+  document.querySelectorAll('video').forEach(video => {
+    if (video.readyState >= 1) {
+      video.currentTime = 0.1;
+    } else {
+      video.addEventListener('loadedmetadata', () => {
+        video.currentTime = 0.1;
+      }, { once: true });
+    }
+  });
+</script>
+<script src="lang.js"></script>
+</body>
+</html>
